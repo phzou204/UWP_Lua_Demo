@@ -1,0 +1,178 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:customControls="using:CustomControls"
+    xmlns:local="using:CustomControls.Themes">
+
+    <!--custom button-->
+    <Style TargetType="customControls:MyButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Green"/>
+        <Setter Property="Foreground" Value="Purple"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="customControls:MyButton">
+                    <Grid Background="Transparent">
+                        <Border CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver"/>
+                                        <VisualState x:Name="Pressed"/>
+                                        <VisualState x:Name="Disabled"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Image x:Name="LeftImage"  HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" 
+                                       Width="{TemplateBinding LeftImageWidth}" Height="{TemplateBinding LeftImageHeight}"
+                                       Source="{TemplateBinding LeftImageSource}" 
+                                       Stretch="Fill"/>
+                                <ContentControl x:Name="ContentContainer" Grid.Column="1"                                                  
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"                                                
+                                                Foreground="{TemplateBinding Foreground}"                                                
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"                                                  
+                                                VerticalContentAlignment="Center">
+                                    <ContentControl.Content>
+                                        <TextBlock Text="{TemplateBinding Content}" TextTrimming="WordEllipsis"/>
+                                    </ContentControl.Content>
+                                </ContentControl>
+
+                                <Image x:Name="RightImage" Grid.Column="2" Width="{TemplateBinding RightImageWidth}" VerticalAlignment="Top"
+                                       Height="{TemplateBinding RightImageHeight}"
+                                       Source="{TemplateBinding RightImageSource}"
+                                       Stretch="Fill"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="customControls:ColorPicker">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="customControls:ColorPicker">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Slider Name="PART_RedSlider" Minimum="0" Maximum="255" 
+                       Margin="{TemplateBinding Padding}"></Slider>
+                            <Slider Grid.Row="1" Name="PART_GreenSlider" Minimum="0" Maximum="255"
+                       Margin="{TemplateBinding Padding}"></Slider>
+
+                            <Slider Grid.Row="2" Name="PART_BlueSlider" Minimum="0" Maximum="255"
+                       Margin="{TemplateBinding Padding}"></Slider>
+
+                            <Rectangle Grid.Column="1" Grid.RowSpan="3"
+                         Margin="{TemplateBinding Padding}"
+                         Width="50" Stroke="Black" StrokeThickness="1">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="{Binding Path=Color,RelativeSource={RelativeSource TemplatedParent}}"></SolidColorBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="customControls:FlipPanel">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="customControls:FlipPanel">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ViewStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:1" To="Flipped">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FlipButtonTransform" Storyboard.TargetProperty="Angle" To="90" Duration="0:0:0.2"></DoubleAnimation>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition GeneratedDuration="0:0:1" To="Normal">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FlipButtonTransform" Storyboard.TargetProperty="Angle" To="-90" Duration="0:0:0.2"></DoubleAnimation>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="BackContent" Storyboard.TargetProperty="Opacity" To="0" Duration="0" ></DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <VisualState x:Name="Flipped">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FlipButtonTransform" Storyboard.TargetProperty="Angle" To="90" Duration="0"></DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="FrontContent" Storyboard.TargetProperty="Opacity" To="0" Duration="0"></DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- This is the front content. -->
+                        <Border x:Name="FrontContent" BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                            <ContentPresenter
+                                Content="{TemplateBinding FrontContent}">
+                            </ContentPresenter>
+                        </Border>
+
+                        <!-- This is the back content. -->
+                        <Border x:Name="BackContent" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                            <ContentPresenter Content="{TemplateBinding BackContent}"/>
+                        </Border>
+
+                        <!-- This the flip button. -->
+                        <ToggleButton Grid.Row="1" x:Name="FlipButton" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="0,10,0,0" Width="19" Height="19">
+                            <ToggleButton.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Ellipse Stroke="#FFA9A9A9"  Fill="AliceBlue"  />
+                                        <Path Data="M1,1.5L4.5,5 8,1.5" 
+                                              Stroke="#FF666666" StrokeThickness="2" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center">
+                                        </Path>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+
+                            <ToggleButton.RenderTransform>
+                                <RotateTransform x:Name="FlipButtonTransform" Angle="-90"></RotateTransform>
+                            </ToggleButton.RenderTransform>
+                        </ToggleButton>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
