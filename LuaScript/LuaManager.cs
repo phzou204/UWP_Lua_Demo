@@ -79,7 +79,7 @@ namespace LuaScript
             //LuaGesture.SetCplus_Delegates();
             //LuaGps.SetCplus_Delegates();
             //LuaHistory.SetCplus_Delegates();
-            //LuaHttp.SetCplus_Delegates();
+            LuaHttp.SetCplus_Delegates();
             //LuaJson.SetCplus_Delegates();
             //LuaKV.SetCplusDelegates();
             //LuaLocation.SetCplus_Delegates();
